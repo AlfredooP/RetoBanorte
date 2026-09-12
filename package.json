@@ -1,0 +1,14 @@
+{
+  "name": "banorte-generative-ui",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Agente (Gemini) + MCP (Snowflake) + A2UI (UI declarativa) — reto de UI generativa",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build:mcp": "npm run build --workspace packages/mcp-snowflake",
+    "dev:web": "npm run dev --workspace packages/web",
+    "dev": "npm run build:mcp && npm run dev:web"
+  }
+}

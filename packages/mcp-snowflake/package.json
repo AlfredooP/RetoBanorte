@@ -1,0 +1,23 @@
+
+{
+  "name": "mcp-snowflake",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Servidor MCP que expone Snowflake (list_tables, describe_table, run_query) como herramientas para un agente",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js",
+    "dev": "tsc -p tsconfig.json --watch"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "snowflake-sdk": "^1.14.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "@types/snowflake-sdk": "^1.6.24",
+    "typescript": "^5.5.4"
+  }
+}
