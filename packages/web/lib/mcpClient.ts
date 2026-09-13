@@ -1,6 +1,7 @@
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 import path from "node:path";
+import fs from "node:fs";
 
 /**
  * El agente habla MCP de verdad: spawnea el servidor mcp-snowflake como
@@ -19,8 +20,13 @@ export type McpTool = {
 function serverEntryPath(): string {
   const configured = process.env.MCP_SNOWFLAKE_SERVER_PATH;
   if (configured) return configured;
-  // Default: monorepo layout, packages/web -> ../mcp-snowflake/dist/index.js
-  return path.resolve(process.cwd(), "../mcp-snowflake/dist/index.js");
+  // Si se ejecuta desde la raíz del monorepo (ej. /app en Docker o npm start en raíz)
+  const fromRoot = path.resolve(process.cwd(), "packages/mcp-snowflake/dist/index.js");
+  if (fs.existsSync(fromRoot)) return fromRoot;
+  // Default: monorepo layout desde packages/web -> ../mcp-snowflake/dist/index.js
+  const fromWeb = path.resolve(process.cwd(), "../mcp-snowflake/dist/index.js");
+  if (fs.existsSync(fromWeb)) return fromWeb;
+  return fromRoot;
 }
 
 async function createClient(): Promise<Client> {

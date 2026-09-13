@@ -1,0 +1,29 @@
+# Ignorar dependencias locales
+node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ignorar builds locales
+.next
+packages/*/.next
+dist
+packages/*/dist
+
+# Ignorar secretos y variables de entorno locales
+.env
+.env*.local
+.env.local
+.env.production
+.env.development
+
+# Ignorar control de versiones y metadatos
+.git
+.gitignore
+.dockerignore
+.DS_Store
+
+# Ignorar documentación no requerida en runtime
+README.md
+DEPLOY.md
+.gemini
