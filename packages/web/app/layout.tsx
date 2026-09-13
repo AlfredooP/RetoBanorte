@@ -1,5 +1,12 @@
 import type { Metadata } from "next";
+import { Michroma } from "next/font/google";
 import "./globals.css";
+
+const michroma = Michroma({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-michroma",
+});
 
 export const metadata: Metadata = {
   title: "Banorte · UI Generativa",
@@ -9,7 +16,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es">
-      <body>{children}</body>
+      <body className={michroma.variable}>{children}</body>
     </html>
   );
 }

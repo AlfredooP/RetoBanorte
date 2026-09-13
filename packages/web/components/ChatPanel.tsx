@@ -59,42 +59,59 @@ export function ChatPanel() {
 
   return (
     <div className="app-shell">
-      <div className="chat-col">
+      <header className="app-header">
+        {/* <div className="brand-mark">B</div> */}
         <div>
-          <strong>Banorte · Agente</strong>
-          <div className="text-muted">Interpreta la intención, el resto lo arma el agente →</div>
+          <strong>MILO</strong>
+          {/* <span>Agente de servicios financieros</span> */}
         </div>
-        <div className="chat-log">
-          {history.map((turn, i) => (
-            <div key={i} className={`chat-bubble ${turn.role}`}>
-              {turn.content}
-            </div>
-          ))}
-          {loading && <div className="loading-hint">Generando interfaz…</div>}
-        </div>
-        <div className="chat-input-row">
-          <input
-            value={input}
-            placeholder="Ej. muéstrame mis últimas transacciones"
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && handleSend()}
-          />
-          <button onClick={handleSend} disabled={loading}>
-            Enviar
-          </button>
-        </div>
-      </div>
+        {/* <div className="header-status"><span /> Sesión activa</div> */}
+      </header>
 
-      <div className="stage-col">
-        {current ? (
-          <Renderer node={current.ui} onAction={handleUiAction} />
-        ) : (
-          <div className="text-muted">
-            Escribe una intención (por ejemplo, &quot;quiero simular un
-            crédito&quot;) para que el agente genere la primera pantalla.
+      <main className="workspace">
+        <section className="conversation-pane" aria-label="Conversación con el asistente">
+          <div className="conversation-flow">
+            {history.length === 0 && (
+              <div className="chat-empty">
+                <div className="chat-empty-icon">✦</div>
+                <strong>¿Qué necesitas resolver hoy?</strong>
+                <span>Escribe una solicitud para generar una experiencia a tu medida.</span>
+              </div>
+            )}
+            {history.map((turn, i) => (
+              <div key={i} className={`chat-bubble ${turn.role}`}>
+                {turn.content}
+              </div>
+            ))}
+            {loading && <div className="loading-hint">Generando interfaz…</div>}
           </div>
-        )}
-      </div>
+          <div className="chat-input-row">
+            <input
+              value={input}
+              placeholder="Escribe tu solicitud..."
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handleSend()}
+            />
+            <button onClick={handleSend} disabled={loading} aria-label="Enviar solicitud">
+              ↑
+            </button>
+          </div>
+        </section>
+
+        <section className="experience-pane" aria-label="Interfaz generada">
+          <div className="stage-inner">
+            {current ? (
+              <Renderer node={current.ui} onAction={handleUiAction} />
+            ) : (
+              <div className="stage-empty">
+                <span className="stage-kicker">Tu espacio de trabajo</span>
+                <h1>Diseñemos tu siguiente paso financiero.</h1>
+                <p>Escribe una intención en el asistente y aquí aparecerá una experiencia hecha para resolverla.</p>
+              </div>
+            )}
+          </div>
+        </section>
+      </main>
     </div>
   );
 }
